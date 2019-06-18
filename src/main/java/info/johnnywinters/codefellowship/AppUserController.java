@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.security.Principal;
 import java.util.ArrayList;
 
 @Controller
@@ -42,6 +43,14 @@ public class AppUserController {
         return "user";
     }
 
+    @GetMapping("/myprofile")
+    public String getProfile(Principal p, Model m) {
+        AppUser user = appUserRepository.findByUsername(p.getName());
+        m.addAttribute("principal", p);
+        m.addAttribute("user", user);
+        return "myprofile";
+    }
+
     @GetMapping("/login")
     public String getLoginPage() {
         return "login";
@@ -55,5 +64,10 @@ public class AppUserController {
     @GetMapping("/home")
     public String getHomePage() {
         return "home";
+    }
+
+    @GetMapping("logout_success")
+    public String getLogout(){
+        return "logout";
     }
 }
