@@ -5,7 +5,10 @@
     <title>CF!</title>
 </head>
 <body>
-<h1>CodeFellowShip!</h1>
-<h3>Welcome<span th:text=" ,${principal.name}"></span></h3>
+    <h1>CodeFellowShip!</h1>
+    <a href="/login">Login</a>
+    <a href="/signup">Sign up</a>
+    <a href="/logout">Log out</a>
+    <h3>Welcome, <span th:text="${principal.name}"></span></h3>
 </body>
 </html>
