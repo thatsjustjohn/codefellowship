@@ -38,16 +38,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                // allow requests to all URLS that match the patterns even if not logged in
-                .antMatchers("/home", "/login", "/signup").permitAll()
-                // anything else, you must be logged in
-                .anyRequest().authenticated()
+                    // allow requests to all URLS that match the patterns even if not logged in
+                    .antMatchers("/home", "/login", "/signup").permitAll()
+                    // anything else, you must be logged in
+                    .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/myprofile")
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/myprofile")
                 .and()
-                .logout().logoutSuccessUrl("/logout_success").permitAll();
+                    .logout().logoutSuccessUrl("/logout_success").permitAll();
     }
 
     @Override

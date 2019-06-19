@@ -12,10 +12,10 @@ public class CodeFellowShipController {
 
 
     @GetMapping("/")
-    public String getUsers(Principal p, Model m) {
+    public String getRoot(Principal p, Model m) {
         System.out.println(p.getName());
         m.addAttribute("principal", p);
-        return "codefellowship";  //home??
+        return "home";  //home??
     }
 
 
