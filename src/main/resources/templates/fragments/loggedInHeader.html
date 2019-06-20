@@ -1,0 +1,10 @@
+<header class="potato" th:fragment="header(principal)">
+    <h1>CodeFellowShip!</h1>
+    <nav>
+        <a href="/">Home</a>
+<!--        <a href="/login">Login</a>-->
+<!--        <a href="/signup">Sign up</a>-->
+        <a href="/logout">Log out</a>
+        <a href="/myprofile">[[${principal.getName()}]]</a>
+    </nav>
+</header>

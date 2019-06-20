@@ -1,0 +1,6 @@
+<ul th:fragment="postsList(posts)">
+    <li th:each="post : ${posts}">
+        <span th:text="${post.creator.username}">:</span><br/>
+        <span th:text="${post.body}"></span>
+    </li>
+</ul>

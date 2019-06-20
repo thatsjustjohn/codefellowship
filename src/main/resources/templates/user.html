@@ -5,11 +5,9 @@
     <title>CodeFellowShip User</title>
 </head>
 <body>
-    <h1>CodeFellowShip!</h1>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign up</a>
-    <a href="/logout">Log out</a>
+    <div th:replace="fragments/header :: header">...</div>
     <h2>Username: <span th:text="${user.username}"></span></h2>
+    <img src="../profile.jpg" alt="Profile picture"><br/>
     First Name: <span th:text="${user.firstname}"></span><br/>
     Last Name: <span th:text="${user.lastname}"></span><br/>
     Date of Birth: <span th:text="${user.dateOfBirth}"></span><br/>

@@ -5,11 +5,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class AppUser implements UserDetails {
@@ -18,6 +17,8 @@ public class AppUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+
+    @Column(unique = true)
     String username;
     String password;
     String firstname;
@@ -25,7 +26,17 @@ public class AppUser implements UserDetails {
     String dateOfBirth;
     String bio;
 
+    @OneToMany(mappedBy = "creator")
+    List<Post> posts;
+
+    @ManyToMany
+    Set<AppUser> followers;
+
+    @ManyToMany
+    Set<AppUser> followees;
+
     public AppUser(){}
+
 
     public AppUser(String username, String password){
         this.username = username;
@@ -41,24 +52,10 @@ public class AppUser implements UserDetails {
         this.bio = bio;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+    // Getters
+    public long getId() { return this.id; }
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    public String getFirstname() {
-        return this.firstname;
-    }
+    public String getFirstname() { return this.firstname; }
 
     public String getLastname() {
         return this.lastname;
@@ -70,6 +67,30 @@ public class AppUser implements UserDetails {
 
     public String getDateOfBirth() {
         return this.dateOfBirth;
+    }
+
+    public List<Post> getPosts() { return this.posts; }
+
+    public Set<AppUser> getFollowees() { return this.followees; }
+
+    public Set<AppUser> getFollowers() { return this.followers; }
+
+
+    // Other Getters
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override

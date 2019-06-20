@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up for CodeFellowship</title>
+</head>
+<body>
+
+    <div th:replace="fragments/loggedInHeader :: header(principal=${principal})">...</div>
+    <h2>Create a new post</h2>
+    <form action="/posts" method="POST" id="postsForm">
+        <label for="body">Post body</label><br/>
+        <textarea rows="4" cols="50" name="body" id="body" form="postsForm">Enter text for your post...</textarea>
+        <input type="submit" />
+    </form>
+
+</body>
+</html>

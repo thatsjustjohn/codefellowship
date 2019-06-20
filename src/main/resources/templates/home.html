@@ -5,10 +5,12 @@
     <title>CF!</title>
 </head>
 <body>
-    <h1>CodeFellowShip!</h1>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign up</a>
-    <a href="/logout">Log out</a>
+    <div th:replace="${principal != null} ? ~{fragments/loggedInHeader :: header(principal=${principal})} : ~{fragments/header:: header}"/>
     <h2>Welcome to Code FellowShip</h2>
+
+    <h3>Welcome,
+        <span th:if="${principal}"><span th:text="${principal.name}"></span></span>
+        <span th:unless="${principal}">Login or signup to follow a fellow</span>
+    </h3>
 </body>
 </html>

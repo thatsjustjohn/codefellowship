@@ -5,16 +5,28 @@
     <title>CodeFellowShip</title>
 </head>
 <body>
-    <h1>CodeFellowShip!</h1>
-    <a href="/login">Login</a>
-    <a href="/signup">Sign up</a>
-    <a href="/logout">Log out</a>
+    <div th:replace="${principal != null} ? ~{fragments/loggedInHeader :: header(principal=${principal})} : ~{fragments/header:: header}">
+    </div>
     <h2>Your Profile</h2>
+    <img src="../profile.jpg" alt="Profile picture"><br/>
     Username: <span th:text="${user.username}"></span><br/>
     First Name: <span th:text="${user.firstname}"></span><br/>
     Last Name: <span th:text="${user.lastname}"></span><br/>
     Date of Birth: <span th:text="${user.dateOfBirth}"></span><br/>
     Bio: <span th:text="${user.bio}"></span><br/>
-</li>
+
+    </li>
+
+
+    <span th:if="${principal}">
+        <h3>Posts!</h3>
+        <a href="posts/add">create new post</a><br/>
+        <span th:if="${hasNoPosts}">
+            <span>You have No Post! Create One!</span>
+        </span>
+        <span th:if="${!hasNoPosts}">
+            <div th:replace="fragments/posts :: postsList(posts=${user.posts})"></div>
+        </span>
+    </span>
 </body>
 </html>
