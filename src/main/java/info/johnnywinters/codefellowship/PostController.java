@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class PostController {
@@ -29,6 +33,21 @@ public class PostController {
             m.addAttribute("hasNoPosts", currentUser.posts.isEmpty());
         }
         return "home";
+    }
+
+    @GetMapping("/feed")
+    public String getFeed(Principal p, Model m){
+        m.addAttribute("principal", p);
+        AppUser currentUser = appUserRepository.findByUsername(p.getName());
+        Set<AppUser> followers = currentUser.getFollowers();
+        List<Post> posts = new ArrayList<>();
+        for (AppUser follower : followers) {
+            posts.addAll(follower.posts);
+        }
+        System.out.println(posts.toString());
+        m.addAttribute("hasNoPosts", posts.isEmpty());
+        m.addAttribute("posts", posts);
+        return "feed";
     }
 
 

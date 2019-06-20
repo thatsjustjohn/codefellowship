@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CF!</title>
+</head>
+<body>
+    <div th:replace="fragments/loggedInHeader :: header(principal=${principal})">...</div>
+    <h2>Posts:</h2>
+
+    <span th:if="${principal}">
+        <h3>Posts!</h3>
+        <span th:if="${hasNoPosts}">
+            <span>No one has posted anything!</span>
+        </span>
+        <span th:if="${!hasNoPosts}">
+            <div th:replace="fragments/posts :: postsList(posts=${posts})"></div>
+        </span>
+    </span>
+</body>
+</html>
