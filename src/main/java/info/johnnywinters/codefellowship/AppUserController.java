@@ -56,6 +56,7 @@ public class AppUserController {
         AppUser user = appUserRepository.findByUsername(p.getName());
         m.addAttribute("principal", p);
         m.addAttribute("user", user);
+        m.addAttribute("hasNoPosts", user.posts.isEmpty());
         return "myprofile";
     }
 
@@ -63,6 +64,7 @@ public class AppUserController {
     public String getSignupPage() {
         return "createUserForm";
     }
+
 
     @GetMapping("/home")
     public String getHomePage(Principal p, Model m) {
