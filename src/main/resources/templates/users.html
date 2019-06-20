@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up for CodeFellowship</title>
+</head>
+<body>
+
+    <div th:replace="fragments/loggedInHeader :: header(principal=${principal})">...</div>
+    <h2>List of all the users</h2>
+    <ul>
+        <li th:each="user : ${users}">
+            <a th:href="@{'/users/'+${user.id}}"  ><img src="../profile.jpg" alt="Profile picture"  style="width:82px; height:86px"><br/></a>
+            Username: <span th:text="${user.username}"></span><br/>
+            First Name: <span th:text="${user.firstname}"></span><br/>
+            Last Name: <span th:text="${user.lastname}"></span><br/>
+            Date of Birth: <span th:text="${user.dateOfBirth}"></span><br/>
+            Bio: <span th:text="${user.bio}"></span><br/>
+        </li>
+    </ul>
+
+
+</body>
+</html>

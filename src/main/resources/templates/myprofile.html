@@ -5,8 +5,7 @@
     <title>CodeFellowShip</title>
 </head>
 <body>
-    <div th:replace="${principal != null} ? ~{fragments/loggedInHeader :: header(principal=${principal})} : ~{fragments/header:: header}">
-    </div>
+    <div th:replace="fragments/loggedInHeader :: header(principal=${principal})">...</div>
     <h2>Your Profile</h2>
     <img src="../profile.jpg" alt="Profile picture"><br/>
     Username: <span th:text="${user.username}"></span><br/>

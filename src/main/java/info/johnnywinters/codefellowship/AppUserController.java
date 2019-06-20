@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 @Controller
@@ -31,9 +32,32 @@ public class AppUserController {
     public RedirectView createUser(String username, String password, String firstname, String lastname, String dateOfBirth, String bio){
         AppUser newUser = new AppUser(username, bCryptPasswordEncoder.encode(password), firstname, lastname, dateOfBirth, bio);
         appUserRepository.save(newUser);
+        System.out.println(newUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(newUser, null, new ArrayList<>());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new RedirectView("/");
+    }
+
+    @PostMapping("/users/{id}/follow")
+    public RedirectView addFollower(@PathVariable Long id, Long follower, Principal p, Model m){
+        // we have the ID of who to follow
+        AppUser current = appUserRepository.findByUsername(p.getName());
+        AppUser whoToFollow = appUserRepository.findById(id).get();
+        // make them be friends
+        current.followers.add(whoToFollow);
+        whoToFollow.followees.add(current);
+        appUserRepository.save(current);
+        appUserRepository.save(whoToFollow);
+        // redirect back to the person we followed
+        return new RedirectView("/users/" + id);
+    }
+
+    @GetMapping("/users")
+    public String getUsersPage(Principal p, Model m){
+        Iterable<AppUser> users = appUserRepository.findAll();
+        m.addAttribute("principal", p);
+        m.addAttribute("users", users);
+        return "users";
     }
 
     @GetMapping("/login")
@@ -43,10 +67,14 @@ public class AppUserController {
     }
 
     @GetMapping("/users/{id}")
-    public String getSpecficUser(@PathVariable long id, Model m) {
+    public String getSpecficUser(@PathVariable long id,Principal p, Model m) {
         // .get to get value inside of optional
+        AppUser current = appUserRepository.findByUsername(p.getName());
         AppUser user = appUserRepository.findById(id).get();
-        System.out.println(user.toString());
+        m.addAttribute("principal", p);
+        m.addAttribute("myProfile", p.getName().equals(user.username));
+        m.addAttribute("isFollowed", current.followers.contains(user));
+        System.out.println(current.followers.toString());
         m.addAttribute("user", user);
         return "user";
     }
