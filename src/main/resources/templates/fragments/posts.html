@@ -1,6 +1,6 @@
 <ul th:fragment="postsList(posts)">
     <li th:each="post : ${posts}">
-        <span th:text="${post.creator.username}">:</span><br/>
+        <a th:href="@{'/users/'+${post.creator.id}}"><span th:text="${post.creator.username}">:</span></a><br/>
         <span th:text="${post.body}"></span>
     </li>
 </ul>
